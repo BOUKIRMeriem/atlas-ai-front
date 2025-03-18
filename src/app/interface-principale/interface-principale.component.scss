@@ -1,0 +1,125 @@
+.main-container {
+    display: flex;
+    height: 100vh;
+    transition: margin-left 0.3s ease;
+  }
+  
+  /* ========== SIDEBAR ========== */
+  .sidebar {
+    width: 250px;
+    background: #f8faff;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.05);
+    transition: width 0.3s ease;
+  }
+  
+  /* Sidebar réduite */
+  .collapsed .sidebar {
+    width: 70px;
+  }
+  
+  .collapsed .sidebar .new-chat,
+  .collapsed .sidebar h4,
+  .collapsed .sidebar ul {
+    display: none;
+  }
+  
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .new-chat {
+    background: #e6f5e6;
+    color: #4caf50;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+  
+  .search-icon {
+    font-size: 18px;
+    cursor: pointer;
+    color: #4caf50;
+  }
+  
+  /* ========== CONTENU PRINCIPAL ========== */
+  .chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    position: relative;
+  }
+  
+  /* Icône utilisateur */
+  .user-icon {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    color: #4caf50;
+    cursor: pointer;
+  }
+  
+  .chat-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .input-area {
+    display: flex;
+    align-items: center;
+    background: #f9f9fc;
+    border-radius: 12px;
+    padding: 12px;
+    width: 500px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-area input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .input-area input::placeholder {
+    color: #ccc;
+  }
+  
+  .icons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .attachment-icon,
+  .waveform-icon {
+    font-size: 18px;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .attachment-icon:hover,
+  .waveform-icon:hover {
+    color: #333;
+  }
+  
+  
