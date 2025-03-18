@@ -1,50 +1,45 @@
 <div class="main-container">
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-      <div class="sidebar-header">
-        <button class="new-chat">
-          <fa-icon [icon]="faCommentDots"></fa-icon>
-          Nouveau chat
-        </button>
-        <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
-      </div>
-  
-      <h4>Historique <span class="view-all">All ></span></h4>
-      <ul class="history-list">
-        <li>Analyse des ventes</li>
-        <li>Analyse des Retours Clients</li>
-        <li>Prédiction des Tendances</li>
-        <li>Prévisions de ventes</li>
-      </ul>
-  
-      <h4>Assistants <span class="view-all">All ></span></h4>
-      <ul class="assistants-list">
-        <li>
-          <img src="assets/visiodata.png" alt="VisioData" />
-          <b>VisioData</b>
-        </li>
-        <li>
-          <img src="assets/tourbot.png" alt="TourBot" />
-          <b>TourBot</b>
-        </li>
-      </ul>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <button class="new-chat">
+        Nouveau chat
+      </button>
     </div>
+
+    <h4>Historique <span class="view-all">All ></span></h4>
+    <ul class="history-list">
+      <li>Analyse des ventes</li>
+      <li>Analyse des Retours Clients</li>
+      <li>Prédiction des Tendances</li>
+      <li>Prévisions de ventes</li>
+    </ul>
+
+    <h4>Assistants <span class="view-all">All ></span></h4>
+    <ul class="assistants-list">
+      <li>
+        <img src="assets/visiodata.png" alt="VisioData" />
+        <b>VisioData</b>
+      </li>
+      <li>
+        <img src="assets/tourbot.png" alt="TourBot" />
+        <b>TourBot</b>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CONTENU PRINCIPAL -->
+  <div class="chat-container">
+
+    <h2 class="chat-title">
+      <span>Comment</span> <b>puis-je vous aider</b> <span>?</span>
+    </h2>
+
+    <div class="input-area">
+      <input type="text" placeholder="Poser une question" [(ngModel)]="message" (keyup.enter)="sendMessage()">
+      <div class="icons">
   
-    <!-- CONTENU PRINCIPAL -->
-    <div class="chat-container">
-      <fa-icon [icon]="faUserCircle" class="user-icon"></fa-icon>
-  
-      <h2 class="chat-title">
-        <span>Comment</span> <b>puis-je vous aider</b> <span>?</span>
-      </h2>
-  
-      <div class="input-area">
-        <input type="text" placeholder="Poser une question" [(ngModel)]="message" (keyup.enter)="sendMessage()">
-        <div class="icons">
-          <fa-icon [icon]="faPaperclip" class="attachment-icon"></fa-icon>
-          <fa-icon [icon]="faMicrophone" class="microphone-icon"></fa-icon>
-        </div>
       </div>
     </div>
   </div>
-  
+</div>

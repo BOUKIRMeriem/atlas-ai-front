@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
-import { 
-  faCommentDots, 
-  faMagnifyingGlass, 
-  faPaperclip,       // ✅ Ajouté
-  faMicrophone,      // ✅ Ajouté
-  faUserCircle 
-} from '@fortawesome/free-solid-svg-icons';
+
+
 
 @Component({
   selector: 'app-interface-principale',
@@ -16,22 +11,20 @@ export class InterfacePrincipaleComponent {
   message: string = '';
   messages: { sender: string, text: string, timestamp: Date }[] = [];
 
-  // Icônes FontAwesome
-  faCommentDots = faCommentDots;
-  faSearch = faMagnifyingGlass;
-  faPaperclip = faPaperclip;   // ✅ Correction ici
-  faMicrophone = faMicrophone; // ✅ Correction ici
-  faUserCircle = faUserCircle;
 
+  // Méthode pour envoyer un message
   sendMessage() {
     if (!this.message.trim()) return;
 
+    // Ajouter le message de l'utilisateur
     this.messages.push({ sender: 'user', text: this.message, timestamp: new Date() });
 
+    // Ajouter une réponse automatique après un délai
     setTimeout(() => {
       this.messages.push({ sender: 'bot', text: 'Réponse automatique du bot.', timestamp: new Date() });
     }, 1000);
 
+    // Réinitialiser le champ de message
     this.message = '';
   }
 }
