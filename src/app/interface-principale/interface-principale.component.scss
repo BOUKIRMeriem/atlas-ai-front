@@ -7,26 +7,15 @@
   /* ========== SIDEBAR ========== */
   .sidebar {
     width: 250px;
-    background: #f8faff;
-    padding: 15px;
+    background: #F8F8FF;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.05);
     transition: width 0.3s ease;
   }
-  
-  /* Sidebar réduite */
-  .collapsed .sidebar {
-    width: 70px;
-  }
-  
-  .collapsed .sidebar .new-chat,
-  .collapsed .sidebar h4,
-  .collapsed .sidebar ul {
-    display: none;
-  }
-  
+
   .sidebar-header {
     display: flex;
     justify-content: space-between;
@@ -34,17 +23,75 @@
   }
   
   .new-chat {
-    background: #e6f5e6;
-    color: #4caf50;
-    padding: 8px 15px;
+    color: #2ecc71; 
+    background: #ECF0F1;
+    padding: 8px;
     border: none;
-    border-radius: 20px;
-    font-weight: bold;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     gap: 5px;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Apple Chancery', cursive;
+   
   }
+  .search{
+    color: #2ecc71; 
+    background: #ECF0F1;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 45px;
+  }
+  .section-title {
+    font-size: 15px;
+    margin-right:  10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 60%;
+    font-family: 'Poppins', sans-serif;
+  }
+  .view-all {
+    font-size: 12px;
+    opacity: 60%;
+    text-decoration: none; 
+  }
+  
+  .view-all:hover {
+    font-weight: bold;
+    text-decoration: underline; 
+    opacity: 100%; 
+  }
+  .assistant-img{
+    width: 50px;
+    height: 50px;
+  }
+  .assistants-list {
+    list-style-type: none;
+    padding-left: 10px; 
+  }
+
+  .assistants-list li {
+    display: flex;
+    align-items: center;
+  }
+  .history-list{
+    list-style-type: none;
+    padding-left: 5px; 
+  }
+  .history-list li {
+  margin-bottom: 15px;
+  }
+  
+
+
   
   
   /* ========== AVATAR ========== */
