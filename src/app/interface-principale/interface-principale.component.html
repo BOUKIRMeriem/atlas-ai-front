@@ -3,7 +3,7 @@
   <div class="sidebar">
     <div class="sidebar-header">
       <button class="new-chat">
-        Nouveau chat
+        <span>➕</span> Nouveau chat
       </button>
     </div>
 
@@ -30,16 +30,14 @@
 
   <!-- CONTENU PRINCIPAL -->
   <div class="chat-container">
-
-    <h2 class="chat-title">
-      <span>Comment</span> <b>puis-je vous aider</b> <span>?</span>
-    </h2>
-
+    <p class="chat-title">Comment puis-je vous aider ?</p>
     <div class="input-area">
-      <input type="text" placeholder="Poser une question" [(ngModel)]="message" (keyup.enter)="sendMessage()">
+      <textarea placeholder="Poser une question"></textarea>
       <div class="icons">
-  
+        <img src="assets/images/icon_fichier.png" class="icon-file">
+        <img src="assets/images/icon_voice.png" class="icon-voice">
       </div>
     </div>
+    
   </div>
-</div>
+  
