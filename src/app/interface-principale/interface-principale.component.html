@@ -27,7 +27,13 @@
       </li>
     </ul>
   </div>
-
+  <div class="avatar-container">
+    <div class="avatar" (click)="toggleMenu()">M</div>
+    <div class="menu" *ngIf="menuOpen">
+      <p>Meriem Boukir</p>
+      <button><i class="fas fa-sign-out-alt" style="color: #3CB371;"></i>  Se Déconnecter</button>
+    </div>
+  </div>
   <!-- CONTENU PRINCIPAL -->
   <div class="chat-container">
     <p class="chat-title">Comment puis-je vous aider ?</p>

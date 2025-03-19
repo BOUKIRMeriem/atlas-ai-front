@@ -9,9 +9,15 @@ import { Component } from '@angular/core';
 })
 export class InterfacePrincipaleComponent {
   isTextNotEmpty = false;
+  menuOpen = false;
+
 
   toggleIcons(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;
     this.isTextNotEmpty = textarea.value.trim().length > 0;
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 }
