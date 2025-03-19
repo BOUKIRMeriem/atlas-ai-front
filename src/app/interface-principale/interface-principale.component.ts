@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./interface-principale.component.scss']
 })
 export class InterfacePrincipaleComponent {
+  isTextNotEmpty = false;
 
+  toggleIcons(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    this.isTextNotEmpty = textarea.value.trim().length > 0;
+  }
 }

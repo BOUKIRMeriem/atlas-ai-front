@@ -32,12 +32,13 @@
   <div class="chat-container">
     <p class="chat-title">Comment puis-je vous aider ?</p>
     <div class="input-area">
-      <textarea placeholder="Poser une question"></textarea>
+      <textarea placeholder="Poser une question" appAutoResize (input)="toggleIcons($event)"></textarea>
       <div class="icons">
         <img src="assets/images/icon_fichier.png" class="icon-file">
-        <img src="assets/images/icon_voice.png" class="icon-voice">
+        <img *ngIf="!isTextNotEmpty" src="assets/images/icon_voice.png" class="icon-voice">
+        <img *ngIf="isTextNotEmpty" src="assets/images/icon_send.png" class="icon-send">
       </div>
     </div>
-    
-  </div>
+</div>
+
   

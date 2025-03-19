@@ -6,13 +6,16 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { InterfacePrincipaleComponent } from './interface-principale/interface-principale.component';
 import { FormsModule } from '@angular/forms';
+import { AutoResizeDirective } from './directives/auto-resize.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    InterfacePrincipaleComponent
+    InterfacePrincipaleComponent,
+    AutoResizeDirective
+    
   ],
   imports: [
     BrowserModule,
