@@ -77,6 +77,11 @@
     list-style-type: none;
     padding-left: 10px; 
   }
+  .assistants-list li:hover {
+    background-color: #ECF0F1;
+    padding-left: 20px;
+    border-radius: 10px;
+  }
 
   .assistants-list li {
     display: flex;
@@ -88,6 +93,13 @@
   }
   .history-list li {
   margin-bottom: 15px;
+  }
+  .history-list li:hover {
+    background-color: #ECF0F1;
+    padding-left: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 8px;
   }
   
 
