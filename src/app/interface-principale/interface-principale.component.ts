@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-interface-principale',
@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class InterfacePrincipaleComponent {
   isTextNotEmpty = false;
   menuOpen = false;
-  isSidebarHidden = false;
+  isSidebarHidden = false; // Garder cette ligne
 
   toggleIcons(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;
@@ -21,5 +21,13 @@ export class InterfacePrincipaleComponent {
 
   toggleSidebar() {
     this.isSidebarHidden = !this.isSidebarHidden;
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeMenu(event: Event) {
+    const targetElement = event.target as HTMLElement;
+    if (!targetElement.closest('.avatar-container')) {
+      this.menuOpen = false;
+    }
   }
 }

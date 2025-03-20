@@ -1,29 +1,28 @@
+<div class="main-container" [class.sidebar-hidden]="isSidebarHidden">
+  <!-- Bouton pour masquer/afficher la sidebar -->
+  <button class="toggle-sidebar" (click)="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
 
-  <div class="main-container" [class.sidebar-hidden]="isSidebarHidden">
-    <!-- Bouton pour masquer/afficher la sidebar -->
-    <button class="toggle-sidebar" (click)="toggleSidebar()">
-      <i class="fas fa-bars"></i>
-    </button>
-  
-    <!-- SIDEBAR -->
-    <div class="sidebar" [class.hidden]="isSidebarHidden">
-      <div class="sidebar-header">
-        <button class="new-chat">
-          <i class="fas fa-comment-medical"></i> Nouveau chat
-        </button>
-        <button class="search">
-          <i class="fas fa-search" style="left: 100px;"></i>
-        </button>
-      </div>
+  <!-- SIDEBAR -->
+  <div class="sidebar" [class.hidden]="isSidebarHidden">
+    <div class="sidebar-header">
+      <button class="new-chat">
+        <i class="fas fa-comment-medical" style="font-size: 20px;"></i> Nouveau chat
+      </button>
+      <button class="search">
+        <i class="fas fa-search" style="left: 100px;"></i>
+      </button>
+    </div>
 
-    <p class="section-title">Historique <span class="view-all" >All ></span></p>
+    <p class="section-title">Historique <span class="view-all">All ></span></p>
     <ul class="history-list">
       <li>Analyse des ventes</li>
       <li>Analyse des Retours Clients</li>
       <li>Prédiction des Tendances</li>
       <li>Prévisions de ventes</li>
     </ul>
-    
+
     <p class="section-title">Assistants <span class="view-all">All ></span></p>
     <ul class="assistants-list">
       <li>
@@ -36,13 +35,17 @@
       </li>
     </ul>
   </div>
+
   <div class="avatar-container">
     <div class="avatar" (click)="toggleMenu()">M</div>
     <div class="menu" *ngIf="menuOpen">
       <p>UserName</p>
-      <button><i class="fas fa-sign-out-alt" style="color: #3CB371;"></i>  Se Déconnecter</button>
+      <button>
+        <i class="fas fa-sign-out-alt" style="color: #3CB371;"></i> Se Déconnecter
+      </button>
     </div>
   </div>
+
   <!-- CONTENU PRINCIPAL -->
   <div class="chat-container">
     <p class="chat-title">Comment puis-je vous aider ?</p>
@@ -54,6 +57,5 @@
         <img *ngIf="isTextNotEmpty" src="assets/images/icon_send.png" class="icon-send">
       </div>
     </div>
+  </div>
 </div>
-
-  
