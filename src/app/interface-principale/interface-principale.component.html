@@ -1,11 +1,20 @@
-<div class="main-container">
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <button class="new-chat"><i class="fas fa-comment-medical" style=" font-size: 20px;"></i> Nouveau chat</button>
-      <button class="search"><i class="fas fa-search"></i></button>
 
-    </div>
+  <div class="main-container" [class.sidebar-hidden]="isSidebarHidden">
+    <!-- Bouton pour masquer/afficher la sidebar -->
+    <button class="toggle-sidebar" (click)="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+  
+    <!-- SIDEBAR -->
+    <div class="sidebar" [class.hidden]="isSidebarHidden">
+      <div class="sidebar-header">
+        <button class="new-chat">
+          <i class="fas fa-comment-medical"></i> Nouveau chat
+        </button>
+        <button class="search">
+          <i class="fas fa-search" style="left: 100px;"></i>
+        </button>
+      </div>
 
     <p class="section-title">Historique <span class="view-all" >All ></span></p>
     <ul class="history-list">

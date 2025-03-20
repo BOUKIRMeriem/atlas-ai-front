@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-
-
 @Component({
   selector: 'app-interface-principale',
   templateUrl: './interface-principale.component.html',
@@ -10,7 +8,7 @@ import { Component } from '@angular/core';
 export class InterfacePrincipaleComponent {
   isTextNotEmpty = false;
   menuOpen = false;
-
+  isSidebarHidden = false;
 
   toggleIcons(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;
@@ -19,5 +17,9 @@ export class InterfacePrincipaleComponent {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  toggleSidebar() {
+    this.isSidebarHidden = !this.isSidebarHidden;
   }
 }
