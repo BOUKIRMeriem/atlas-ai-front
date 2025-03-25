@@ -3,29 +3,41 @@
   <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sidebar-header">
-      <button class="new-chat">
-        <i class="fas fa-comment-medical" style="font-size: 20px;"></i> Nouveau chat
+      <button class="close-btn">
+        <img src="assets/images/closeSidebar.png" alt="closeSidebar">
       </button>
-      <button class="search">
-        <i class="fas fa-search" style="left: 100px;"></i>
-      </button>
+      <div class="chat-actions">
+        <button class="new-chat">
+          <i class="fas fa-comment-medical" style="font-size: 20px;"></i> Nouveau chat
+        </button>
+        <button class="search">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
     </div>
+
     <p class="section-title">Historique <span class="view-all">All ></span></p>
     <ul class="history-list">
-      <li>Analyse des ventes</li>
-      <li>Analyse des Retours Clients</li>
-      <li>Prédiction des Tendances</li>
-      <li>Prévisions de ventes</li>
+      <li *ngFor="let item of historyItems;">
+        {{ item.title }}
+        <span class="options">...</span>
+        <div class="dropdown-menu">
+          <ul>
+            <li >Renommer</li>
+            <li class="delete" >Supprimer</li>
+          </ul>
+        </div>
+      </li>
     </ul>
     <p class="section-title">Assistants <span class="view-all">All ></span></p>
     <ul class="assistants-list">
       <li>
         <img src="assets/images/img1.png" alt="VisioData" class="assistant-img" />
-        <p style="font-size: 16px; font-weight: 500;">VisioData</p>
+        <p>VisioData</p>
       </li>
       <li>
         <img src="assets/images/img2.png" alt="TourBot" class="assistant-img" />
-        <p style="font-size: 16px; font-weight: 500;">TourBot</p>
+        <p>TourBot</p>
       </li>
     </ul>
   </div>

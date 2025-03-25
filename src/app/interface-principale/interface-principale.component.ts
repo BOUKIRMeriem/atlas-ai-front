@@ -13,6 +13,15 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
   messages: { text: string; isUser: boolean }[] = [];
   isFirstMessageSent = false;
   hasScroll = false; // Ajout de la variable pour détecter le scroll
+  menuOpenIndex: number | null = null;
+
+  // Define the history list as an array of objects
+  historyItems = [
+    { title: 'Analyse des ventes' },
+    { title: 'Analyse des Retours' },
+    { title: 'Prédiction des Tendances' },
+    { title: 'Prévisions de ventes' }
+  ];
 
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
 
@@ -65,7 +74,6 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
     this.isTextNotEmpty = false;
     this.scrollToBottom();
   }
-
 
   scrollToBottom() {
     if (this.messagesContainer) {
