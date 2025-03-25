@@ -36,8 +36,8 @@
 }
 
 .close-btn img {
-  display: block; 
-  height: auto; 
+  display: block;
+  height: auto;
   width: 25px;
 }
 
@@ -132,23 +132,28 @@
   list-style-type: none;
   padding-left: 5px;
 }
-
-.history-list li {
+.history-item {
   margin-bottom: 5px;
   padding: 5px;
   position: relative;
-  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 }
 
-
-.history-list li:hover {
-  background-color: #ECF0F1;
+.history-item:hover {
+  background-color: #ecf0f1;
   border-radius: 8px;
 }
+.options-menu {
+  position: relative;
+  z-index: 11;
+}
 
+.history-item:hover .options {
+  display: inline;
+}
 .options {
   display: none;
   cursor: pointer;
@@ -157,41 +162,40 @@
   padding: 5px;
 }
 
-.history-list li:hover .options {
-  display: inline;
-}
-
-.dropdown-menu {
-  display: none;
+.dropdown {
   position: absolute;
   right: 0;
-  top: 100%;
+  top: 20px;
   background: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  padding: 5px 0;
-  width: 150px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   z-index: 10;
 }
 
-.dropdown-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.history-item:hover .dropdown {
+  display: block;
 }
 
-.dropdown-menu li {
-  padding: 8px 12px;
+.dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.dropdown ul li {
+  padding: 8px 16px;
   cursor: pointer;
 }
 
-.dropdown-menu li:hover {
-  background-color: #f0f0f0;
+.dropdown ul li:hover {
+  background: #f1f1f1;
+
 }
 
-.delete {
-  color: red;
-}
+
+
+
+
 
 
 /* ========== Navbar ========== */
@@ -273,7 +277,7 @@
   margin-bottom: 24vh;
   align-items: center;
   justify-content: center;
-
+  z-index: 1;
   &::-webkit-scrollbar-track {
     background: red; // Couleur de la zone sous le scroll
   }

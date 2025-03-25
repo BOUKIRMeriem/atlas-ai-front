@@ -13,18 +13,35 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
   messages: { text: string; isUser: boolean }[] = [];
   isFirstMessageSent = false;
   hasScroll = false; // Ajout de la variable pour détecter le scroll
-  menuOpenIndex: number | null = null;
+  @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
 
   // Define the history list as an array of objects
   historyItems = [
-    { title: 'Analyse des ventes' },
-    { title: 'Analyse des Retours' },
-    { title: 'Prédiction des Tendances' },
-    { title: 'Prévisions de ventes' }
+    { title: 'Analyse des ventes' , showDropdown: false},
+    { title: 'Analyse des Retours' , showDropdown: false},
+    { title: 'Prédiction des Tendances', showDropdown: false },
+    { title: 'Prévisions de ventes', showDropdown: false }
   ];
 
-  @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
+  toggleDropdown(item: any, event: Event) {
+    event.stopPropagation(); // Empêche la propagation du clic au document
+    this.historyItems.forEach((i) => {
+      if (i !== item) i.showDropdown = false; // Ferme les autres menus
+    });
+    item.showDropdown = !item.showDropdown; // Bascule l'état du menu cliqué
+  }
 
+  // Ferme les menus si on clique en dehors
+  @HostListener('document:click', ['$event'])
+  closeDropdown(event: Event) {
+    const targetElement = event.target as HTMLElement;
+
+    // Vérifie si le clic est en dehors des menus
+    if (!targetElement.closest('.options-menu')) {
+      this.historyItems.forEach((item) => (item.showDropdown = false));
+    }
+  }
+  
   ngAfterViewInit(): void {
     this.checkScroll(); // Vérifie le scroll au chargement
   }
@@ -42,13 +59,7 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
     this.isSidebarHidden = !this.isSidebarHidden;
   }
 
-  @HostListener('document:click', ['$event'])
-  closeMenu(event: Event) {
-    const targetElement = event.target as HTMLElement;
-    if (!targetElement.closest('.avatar-container')) {
-      this.menuOpen = false;
-    }
-  }
+ 
 
   sendMessage(event: Event) {
     event.preventDefault(); // Empêche le saut de ligne dans le textarea
@@ -91,4 +102,14 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
       this.hasScroll = element.scrollHeight > element.clientHeight;
     }
   }
+
+  @HostListener('document:click', ['$event'])
+  closeMenu(event: Event) {
+    const targetElement = event.target as HTMLElement;
+    if (!targetElement.closest('.avatar-container')) {
+      this.menuOpen = false;
+    }
+  }
+
+
 }
