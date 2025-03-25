@@ -17,8 +17,8 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
 
   // Define the history list as an array of objects
   historyItems = [
-    { title: 'Analyse des ventes' , showDropdown: false},
-    { title: 'Analyse des Retours' , showDropdown: false},
+    { title: 'Analyse des ventes', showDropdown: false },
+    { title: 'Analyse des Retours', showDropdown: false },
     { title: 'Prédiction des Tendances', showDropdown: false },
     { title: 'Prévisions de ventes', showDropdown: false }
   ];
@@ -30,7 +30,6 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
     });
     item.showDropdown = !item.showDropdown; // Bascule l'état du menu cliqué
   }
-
   // Ferme les menus si on clique en dehors
   @HostListener('document:click', ['$event'])
   closeDropdown(event: Event) {
@@ -40,8 +39,11 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
     if (!targetElement.closest('.options-menu')) {
       this.historyItems.forEach((item) => (item.showDropdown = false));
     }
+    if (!targetElement.closest('.avatar-container')) {
+      this.menuOpen = false;
+    }
   }
-  
+
   ngAfterViewInit(): void {
     this.checkScroll(); // Vérifie le scroll au chargement
   }
@@ -59,7 +61,7 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
     this.isSidebarHidden = !this.isSidebarHidden;
   }
 
- 
+
 
   sendMessage(event: Event) {
     event.preventDefault(); // Empêche le saut de ligne dans le textarea
@@ -100,14 +102,6 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
     if (this.messagesContainer) {
       const element = this.messagesContainer.nativeElement;
       this.hasScroll = element.scrollHeight > element.clientHeight;
-    }
-  }
-
-  @HostListener('document:click', ['$event'])
-  closeMenu(event: Event) {
-    const targetElement = event.target as HTMLElement;
-    if (!targetElement.closest('.avatar-container')) {
-      this.menuOpen = false;
     }
   }
 

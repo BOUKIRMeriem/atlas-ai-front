@@ -1,19 +1,19 @@
-<div class="main-container">
+<div class="main-container"  [class.sidebar-hidden]="isSidebarHidden">
+  <button class="toggle-sidebar" (click)="toggleSidebar()" >
+    <img  src="assets/images/closeSidebar.png">
+  </button>
 
   <!-- SIDEBAR -->
-  <div class="sidebar">
+  <div class="sidebar" [class.hidden]="isSidebarHidden">
     <div class="sidebar-header">
-      <button class="close-btn">
-        <img src="assets/images/closeSidebar.png" alt="closeSidebar" />
-      </button>
-      <div class="chat-actions">
+    
         <button class="new-chat">
           <i class="fas fa-comment-medical" style="font-size: 20px"></i> Nouveau chat
         </button>
         <button class="search">
           <i class="fas fa-search"></i>
         </button>
-      </div>
+   
     </div>
   
     <p class="section-title">Historique <span class="view-all">All ></span></p>
