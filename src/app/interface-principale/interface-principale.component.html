@@ -1,11 +1,7 @@
-<div class="main-container" [class.sidebar-hidden]="isSidebarHidden">
-  <!-- Bouton pour masquer/afficher la sidebar -->
-  <button class="toggle-sidebar" (click)="toggleSidebar()">
-    <i class="fas fa-bars"></i>
-  </button>
+<div class="main-container">
 
   <!-- SIDEBAR -->
-  <div class="sidebar" [class.hidden]="isSidebarHidden">
+  <div class="sidebar">
     <div class="sidebar-header">
       <button class="new-chat">
         <i class="fas fa-comment-medical" style="font-size: 20px;"></i> Nouveau chat
@@ -14,7 +10,6 @@
         <i class="fas fa-search" style="left: 100px;"></i>
       </button>
     </div>
-
     <p class="section-title">Historique <span class="view-all">All ></span></p>
     <ul class="history-list">
       <li>Analyse des ventes</li>
@@ -22,7 +17,6 @@
       <li>Prédiction des Tendances</li>
       <li>Prévisions de ventes</li>
     </ul>
-
     <p class="section-title">Assistants <span class="view-all">All ></span></p>
     <ul class="assistants-list">
       <li>
@@ -36,7 +30,8 @@
     </ul>
   </div>
 
-  <div class="avatar-container">
+  <!-- Navbar -->
+  <div class="avatar-container" [class.has-scroll]="hasScroll">
     <div class="avatar" (click)="toggleMenu()">M</div>
     <div class="menu" *ngIf="menuOpen">
       <p>UserName</p>
@@ -48,13 +43,22 @@
 
   <!-- CONTENU PRINCIPAL -->
   <div class="chat-container">
-    <p class="chat-title">Comment puis-je vous aider ?</p>
-    <div class="input-area">
-      <textarea placeholder="Poser une question" appAutoResize (input)="toggleIcons($event)"></textarea>
+    <p class="chat-title" *ngIf="messages.length === 0">Comment puis-je vous aider ?</p>
+    <div class="messages-container" #messagesContainer>
+      <div class="messages">
+        <div *ngFor="let msg of messages" [ngClass]="{'user-msg': msg.isUser, 'bot-msg': !msg.isUser}">
+          {{ msg.text }}
+        </div>
+      </div>
+    </div>
+    <!-- Zone de saisie -->
+    <div class="input-area" [ngClass]="{'fixed-bottom': isFirstMessageSent}">
+      <textarea placeholder="Poser une question" appAutoResize [(ngModel)]="message" (input)="toggleIcons($event)"
+        (keydown.enter)="sendMessage($event)"></textarea>
       <div class="icons">
         <img src="assets/images/icon_fichier.png" class="icon-file">
         <img *ngIf="!isTextNotEmpty" src="assets/images/icon_voice.png" class="icon-voice">
-        <img *ngIf="isTextNotEmpty" src="assets/images/icon_send.png" class="icon-send">
+        <img *ngIf="isTextNotEmpty" src="assets/images/icon_send.png" class="icon-send" (click)="sendMessage($event)">
       </div>
     </div>
   </div>

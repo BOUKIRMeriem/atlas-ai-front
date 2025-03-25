@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 })
 export class AutoResizeDirective {
 
-  private readonly maxHeight = 300;
+  private readonly maxHeight = 250;
 
   constructor(private el: ElementRef) {}
 
