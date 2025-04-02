@@ -13,23 +13,31 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
   messages: { text: string; isUser: boolean }[] = [];
   isFirstMessageSent = false;
   hasScroll = false; // Ajout de la variable pour détecter le scroll
+  selectedItem: any = null;
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
 
   // Define the history list as an array of objects
   historyItems = [
-    { title: 'Analyse des ventes', showDropdown: false },
-    { title: 'Analyse des Retours', showDropdown: false },
-    { title: 'Prédiction des Tendances', showDropdown: false },
-    { title: 'Prévisions de ventes', showDropdown: false }
+    { title: 'Analyse des ventes', showDropdown: false, isActive: false },
+    { title: 'Analyse des Retours', showDropdown: false, isActive: false },
+    { title: 'Prédiction des Tendances', showDropdown: false, isActive: false },
+    { title: 'Prévisions de ventes', showDropdown: false, isActive: false },
+    
   ];
 
   toggleDropdown(item: any, event: Event) {
-    event.stopPropagation(); // Empêche la propagation du clic au document
+    event.stopPropagation(); // Empêche la propagation du clic
     this.historyItems.forEach((i) => {
-      if (i !== item) i.showDropdown = false; // Ferme les autres menus
+      if (i !== item) {
+        i.showDropdown = false; // Ferme les autres menus
+        i.isActive = false;
+      }
     });
     item.showDropdown = !item.showDropdown; // Bascule l'état du menu cliqué
+    item.isActive = item.showDropdown;
+    this.selectedItem = item;
   }
+
   // Ferme les menus si on clique en dehors
   @HostListener('document:click', ['$event'])
   closeDropdown(event: Event) {
@@ -37,7 +45,7 @@ export class InterfacePrincipaleComponent implements AfterViewInit {
 
     // Vérifie si le clic est en dehors des menus
     if (!targetElement.closest('.options-menu')) {
-      this.historyItems.forEach((item) => (item.showDropdown = false));
+      this.historyItems.forEach((item) => (item.showDropdown = false, item.isActive = false));
     }
     if (!targetElement.closest('.avatar-container')) {
       this.menuOpen = false;

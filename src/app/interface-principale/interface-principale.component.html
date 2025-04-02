@@ -1,39 +1,40 @@
-<div class="main-container"  [class.sidebar-hidden]="isSidebarHidden">
-  <button class="toggle-sidebar" (click)="toggleSidebar()" >
-    <img  src="assets/images/closeSidebar.png">
-  </button>
-
+<div class="main-container" [class.sidebar-hidden]="isSidebarHidden">
   <!-- SIDEBAR -->
   <div class="sidebar" [class.hidden]="isSidebarHidden">
     <div class="sidebar-header">
-    
-        <button class="new-chat">
-          <i class="fas fa-comment-medical" style="font-size: 20px"></i> Nouveau chat
-        </button>
-        <button class="search">
-          <i class="fas fa-search"></i>
-        </button>
-   
+      <button class="toggle-sidebar" (click)="toggleSidebar()">
+        <img src="assets/images/closeSidebar.png">
+      </button>
+
+      <button class="new-chat">
+        <i class="fas fa-comment-medical" style="font-size: 20px"></i> Nouveau chat
+      </button>
+      <button class="search">
+        <i class="fas fa-search"></i>
+      </button>
     </div>
-  
+
     <p class="section-title">Historique <span class="view-all">All ></span></p>
     <ul class="history-list">
-      <li *ngFor="let item of historyItems" class="history-item">
+      <li *ngFor="let item of historyItems" class="history-item" [class.active]="item.isActive">
         <span class="history-title">{{ item.title }}</span>
         <div class="options-menu">
-          <span class="options" (click)="toggleDropdown(item, $event)">...</span>
+          <span class="options" (click)="toggleDropdown(item, $event)" [class.active]="item.isActive">...</span>
           <div class="dropdown" *ngIf="item.showDropdown">
             <ul>
               <li style="display: flex; align-items: center;">
                 <i class="fas fa-edit" style="margin-right: 8px;"></i> Renommer
               </li>
-              <li style="color: red;display: flex; align-items: center;"><i class="fas fa-trash-alt"  style="margin-right: 8px;"></i> Supprimer</li>
+              <li style="color: red; display: flex; align-items: center;">
+                <i class="fas fa-trash-alt" style="margin-right: 8px;"></i> Supprimer
+              </li>
             </ul>
           </div>
         </div>
       </li>
     </ul>
-  
+
+
     <p class="section-title">Assistants <span class="view-all">All ></span></p>
     <ul class="assistants-list">
       <li>
@@ -46,7 +47,7 @@
       </li>
     </ul>
   </div>
-  
+
   <!-- Navbar -->
   <div class="avatar-container" [class.has-scroll]="hasScroll">
     <div class="avatar" (click)="toggleMenu()">M</div>

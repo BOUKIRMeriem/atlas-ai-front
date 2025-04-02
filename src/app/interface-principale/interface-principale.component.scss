@@ -19,7 +19,9 @@
   top: 0;
   position: fixed;
   height: 100%;
+  z-index: 9999;
 }
+
 .sidebar.hidden {
   transform: translateX(-100%);
 }
@@ -28,46 +30,27 @@
   position: absolute;
   top: 8px;
   left: 15px;
-  background:none;
+  background: none;
   color: white;
   border: none;
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 18px;
-  z-index: 1000; /* Priorité d'affichage */
+  z-index: 10000;
 }
 
 .toggle-sidebar img {
   width: 25px;
   height: 25px;
-  margin-left: -10px;
 }
+
 .sidebar-header {
   display: flex;
-  align-items: center; /* Alignement vertical parfait */
-  justify-content: space-between; /* Espacement équilibré */
+  align-items: center;
+  justify-content: space-between;
   padding: 10px;
-  width: 100%; /* Assure un bon positionnement */
-  
-}
-.close-btn {
-  background: transparent; 
-  border: none; 
-  padding: 0; 
-  cursor: pointer; 
-}
-
-.close-btn img {
-  display: block;
-  height: auto;
-  width: 25px;
-}
-
-.chat-actions {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
+  width: 100%;
 }
 
 .new-chat {
@@ -84,20 +67,16 @@
   font-weight: 600;
   font-family: 'Apple Chancery', cursive;
   margin-top: 50px;
-  margin-left:-5px;
-  margin-right:100px;
+  margin-left: -5px;
+  margin-right: 100px;
 }
 
 .new-chat:hover {
   background-color: #E5E7E9;
 }
 
-.search:hover {
-  background-color: #E5E7E9;
-}
-
-.search{
-  color: #2ecc71; 
+.search {
+  color: #2ecc71;
   background: #ECF0F1;
   padding: 8px;
   border: none;
@@ -109,6 +88,10 @@
   margin-top: 50px;
   margin-left: -100px;
   margin-right: 20px;
+}
+
+.search:hover {
+  background-color: #E5E7E9;
 }
 
 .section-title {
@@ -159,7 +142,10 @@
 .history-list {
   list-style-type: none;
   padding-left: 5px;
+  position: relative;
+
 }
+
 .history-item {
   margin-bottom: 5px;
   padding: 5px;
@@ -170,18 +156,21 @@
   cursor: pointer;
 }
 
-.history-item:hover {
+.history-item:hover,
+.history-item.active {
   background-color: #ecf0f1;
   border-radius: 8px;
 }
+
 .options-menu {
   position: relative;
-  z-index: 11;
 }
 
-.history-item:hover .options {
-  display: inline;
+.history-item:hover .options,
+.history-item.active .options {
+  display: inline; // Affiche les trois points quand actif
 }
+
 .options {
   display: none;
   cursor: pointer;
@@ -192,12 +181,13 @@
 
 .dropdown {
   position: absolute;
-  right: 0;
+  right: -70px;
   top: 20px;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  z-index: 10;
+  border: 1px solid #D0D3D4;
+  z-index: 999;
 }
 
 .history-item:hover .dropdown {
@@ -217,21 +207,14 @@
 
 .dropdown ul li:hover {
   background: #f1f1f1;
-
 }
-
-
-
-
-
-
 
 /* ========== Navbar ========== */
 .avatar-container {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1050;
+  z-index: 1;
   background-color: #fff;
   width: calc(100% - 250px);
   height: 50px;
@@ -270,7 +253,6 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   padding: 5px;
   width: 160px;
-  z-index: 100;
 }
 
 .menu p {
@@ -305,10 +287,6 @@
   margin-bottom: 24vh;
   align-items: center;
   justify-content: center;
-  z-index: 1;
-  &::-webkit-scrollbar-track {
-    background: red; // Couleur de la zone sous le scroll
-  }
 }
 
 
@@ -346,7 +324,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* Pour aligner les messages en haut */
   width: 85%;
   padding: 10px;
 }
@@ -437,10 +414,8 @@
   background: #ecf0f1;
   border-radius: 4px;
 }
+
 * {
   scrollbar-width: thin;
   scrollbar-color: #ecf0f1 #fbfcfc;
 }
-
-
-
