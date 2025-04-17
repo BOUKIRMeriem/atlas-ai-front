@@ -9,7 +9,7 @@
     background: #F8F8FF;
     border-radius: 55px;
     width: 539px;
-    height: 409px;
+    height: auto;
   }
   .gradient-btn {
     background: linear-gradient(to right, #90EE90, #3CB371);
@@ -50,7 +50,7 @@
     width: 100%;
     position: relative;
     transition: border-bottom 0.3s ease-in-out;
-  
+    
   }
   
   .input-group input {
@@ -75,7 +75,7 @@
     left: 5px;
     top: 65%;
     transform: translateY(-50%);
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     transition: all 0.3s ease-in-out;
   }
@@ -95,6 +95,28 @@
   .input-group:has(input:focus) {
     border-bottom: 2px solid #1d8348; 
   }
+
+  .alert {
+    max-width: 90%;    
+    margin: 0 auto 10px;       
+    padding: 0.5rem 1rem; 
+    box-sizing: border-box;
+    width: 80%;
+    margin: 0 auto 10px;
+    font-size: 0.85rem;
+  }
+
+
+  
+  
+  
+
+  
+
+  
+ 
+  
+  
   
   
   

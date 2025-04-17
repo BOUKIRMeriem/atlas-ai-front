@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
-import { InterfacePrincipaleComponent } from './interface-principale/interface-principale.component';
+import { MainLayoutComponent } from './MainLayout/MainLayout.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  {path: 'interface-principale', component: InterfacePrincipaleComponent},
+  { path: 'chat', component: MainLayoutComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },  
   { path: 'login', component: LoginComponent }, 
-  { path: 'register', component: RegisterComponent }, 
+  { path: 'register', component: RegisterComponent},
 
 ];
 

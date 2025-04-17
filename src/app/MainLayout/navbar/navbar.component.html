@@ -1,0 +1,9 @@
+<div class="avatar-container" [class.has-scroll]="hasScroll">
+  <div class="avatar" (click)="toggleMenu()">M</div>
+  <div class="menu" *ngIf="menuOpen">
+    <p>UserName</p>
+    <button (click)="logout()">
+      <i class="fas fa-sign-out-alt" style="color: #3CB371;"></i> Se Déconnecter
+    </button>
+  </div>
+</div>

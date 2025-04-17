@@ -1,0 +1,59 @@
+<div class="sidebar">
+    <div class="sidebar-header">
+        <button class="toggle-sidebar">
+            <img src="assets/images/closeSidebar.png">
+        </button>
+        <button class="new-chat" (click)="newChat()">
+            <i class="fas fa-comment-medical" style="font-size: 20px"></i> Nouveau chat
+        </button>
+        <button class="search" (click)="toggleSearch()">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+    <div class="search-container" *ngIf="isSearchOpen">
+        <div class="search-header">
+            <input type="text" placeholder="Rechercher un chat..." [(ngModel)]="searchQuery">
+            <button class="close-btn" (click)="toggleSearch()">✖</button>
+        </div>
+        <div class="history-title2" *ngIf="filteredHistory().length > 0">
+            30 jours précédents
+        </div>
+        <ul class="search-results">
+            <li *ngFor="let chat of filteredHistory()" >
+                <i class="fas fa-comment"></i> {{ chat.title }}
+            </li>
+        </ul>
+        <p *ngIf="filteredHistory().length === 0" class="no-results"><i class="fas fa-search"></i> Aucun résultat</p>
+    </div>
+
+    <p class="section-title">Historique <span class="view-all">All ></span></p>
+    <ul class="history-list">
+        <li *ngFor="let item of historyItems" class="history-item" [class.active]="item.isActive">
+            <span class="history-title">{{ item.title }}</span>
+            <div class="options-menu">
+                <span class="options" (click)="toggleDropdown(item, $event)" [class.active]="item.isActive">...</span>
+                <div class="dropdown" *ngIf="item.showDropdown">
+                    <ul>
+                        <li style="display: flex; align-items: center;">
+                            <i class="fas fa-edit" style="margin-right: 8px;"></i> Renommer
+                        </li>
+                        <li style="color: red; display: flex; align-items: center;">
+                            <i class="fas fa-trash-alt" style="margin-right: 8px;"></i> Supprimer
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <p class="section-title">Assistants <span class="view-all">All ></span></p>
+    <ul class="assistants-list">
+        <li>
+            <img src="assets/images/img1.png" alt="VisioData" class="assistant-img" />
+            <p>VisioData</p>
+        </li>
+        <li>
+            <img src="assets/images/img2.png" alt="TourBot" class="assistant-img" />
+            <p>TourBot</p>
+        </li>
+    </ul>
+</div>
