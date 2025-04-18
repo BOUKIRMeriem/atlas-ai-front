@@ -24,14 +24,14 @@ export class LoginComponent {
 
   login(): void {
     const { identifiant, mot_de_passe } = this.loginForm.value;
-
+  
     // Vérification simple du format de l'email avec regex
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifiant);
-
+  
     const loginObservable = isEmail
       ? this.authService.loginWithEmail(identifiant, mot_de_passe) // Connexion par email
       : this.authService.loginWithUsername(identifiant, mot_de_passe); // Connexion par nom d'utilisateur
-
+  
     loginObservable.subscribe({
       next: (res) => {
         console.log("Connecté", res);
@@ -43,10 +43,15 @@ export class LoginComponent {
       },
       error: (err) => {
         console.error("Erreur de login", err);
-        this.loginError = "Identifiants invalides."; // Message d'erreur
+        if (err.message === 'Veuillez vérifier votre email avant de vous connecter.') {
+          this.loginError = "Veuillez vérifier votre email avant de vous connecter."; // Message d'erreur spécifique
+        } else {
+          this.loginError = "Identifiants invalides."; // Message d'erreur générique
+        }
       }
     });
   }
+  
   
   handleGoogleLogin() {
     const provider = new GoogleAuthProvider();

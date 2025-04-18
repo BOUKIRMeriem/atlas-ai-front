@@ -29,12 +29,12 @@ export class RegisterComponent {
       this.registerError = 'Les mots de passe ne correspondent pas.';
       return;
     }
-
+  
     const email = this.registerForm.get('email')?.value;
     const password = this.registerForm.get('mot_de_passe')?.value;
     const nom = this.registerForm.get('nom')?.value;
     const nom_utilisateur = this.registerForm.get('nom_utilisateur')?.value;
-
+  
     this.authService.register(email, password, nom, nom_utilisateur).subscribe({
       next: (res) => {
         this.successMessage = 'Inscription réussie. Un e-mail de vérification vous a été envoyé.';
@@ -42,7 +42,7 @@ export class RegisterComponent {
         console.log("Inscrit avec succès", res);
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 1000);
+        }, 2000);
       },
       error: (err) => {
         this.registerError = 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.';
@@ -51,4 +51,5 @@ export class RegisterComponent {
       }
     });
   }
+  
 }

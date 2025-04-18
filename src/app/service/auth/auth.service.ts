@@ -49,24 +49,48 @@ export class AuthService {
   }
 
   loginWithEmail(email: string, password: string): Observable<any> {
-    return from(signInWithEmailAndPassword(this.auth, email, password));
+    return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
+      switchMap((userCredential) => {
+        const user = userCredential.user;
+        if (user.emailVerified) {
+          return of(userCredential); // Connexion réussie si l'email est vérifié
+        } else {
+          throw new Error('Veuillez vérifier votre email avant de vous connecter.');
+        }
+      })
+    );
   }
-
+  
   loginWithUsername(username: string, password: string): Observable<any> {
     const usernamesDoc = doc(this.firestore, `usernames/${username}`);
-
+  
     return from(getDoc(usernamesDoc)).pipe(
       switchMap((docSnap) => {
         if (docSnap.exists()) {
           const email = docSnap.data()['email'];
           console.log('Email trouvé:', email);
-          return from(signInWithEmailAndPassword(this.auth, email, password));
+  
+          // Connexion avec l'email et mot de passe
+          return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
+            switchMap((userCredential) => {
+              const user = userCredential.user;
+  
+              // Vérification si l'email de l'utilisateur a été vérifié
+              if (!user.emailVerified) {
+                throw new Error('Veuillez vérifier votre email avant de vous connecter.');
+              }
+  
+              // Si l'email est vérifié, retour de l'utilisateur connecté
+              return of(userCredential);
+            })
+          );
         } else {
           throw new Error('Nom d’utilisateur non trouvé');
         }
       })
     );
   }
+  
 
   loginWithGoogle(): Observable<any> {
     return from(signInWithPopup(this.auth, new GoogleAuthProvider()));
