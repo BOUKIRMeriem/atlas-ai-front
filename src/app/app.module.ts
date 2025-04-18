@@ -14,6 +14,12 @@ import { AuthInterceptor } from './auth.interceptor';
 import { NavbarComponent } from './MainLayout/navbar/navbar.component';
 import { SidebarComponent } from './MainLayout/sidebar/sidebar.component';
 import { MainContentComponent } from './MainLayout/main-content/main-content.component';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore'; 
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -33,12 +39,21 @@ import { MainContentComponent } from './MainLayout/main-content/main-content.com
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()), 
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
-     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
 
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    
+  }
+ }

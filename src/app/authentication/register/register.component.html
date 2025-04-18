@@ -78,9 +78,13 @@
       <!-- Mot de passe -->
       <div class="input-container ">
         <div class="input-group">
-          <input class="form-control" type="password" id="mot_de_passe" placeholder=" "
+          <input class="form-control" [type]="showPassword ? 'text' : 'password'" id="mot_de_passe" placeholder=" "
             formControlName="mot_de_passe" />
-          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+          <span class="input-group-text">
+            <i class="fa-solid me-2" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+            (click)="showPassword = !showPassword"></i>
+            <i class="fas fa-lock"></i>
+          </span>
           <label for="mot_de_passe" class="form-label">Mot de passe</label>
           <span *ngIf="registerForm.get('mot_de_passe')?.invalid && registerForm.get('mot_de_passe')?.touched"
             class="position-absolute top-0 end-0 me-2 mt-1 text-danger">
@@ -96,9 +100,13 @@
       <!-- Confirmation mot de passe -->
       <div class="input-container ">
         <div class="input-group">
-          <input class="form-control" type="password" id="confirmer_mot_de_passe" placeholder=" "
+          <input class="form-control"  [type]="showConfirmPassword ? 'text' : 'password'" id="confirmer_mot_de_passe" placeholder=" "
             formControlName="confirmer_mot_de_passe" />
-          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+          <span class="input-group-text">
+            <i class="fa-solid me-2" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"
+            (click)="showConfirmPassword = !showConfirmPassword"></i>
+            <i class="fas fa-lock"></i>
+          </span>
           <label for="confirmer_mot_de_passe" class="form-label">Confirmer le mot de passe</label>
           <span
             *ngIf="registerForm.get('confirmer_mot_de_passe')?.invalid && registerForm.get('confirmer_mot_de_passe')?.touched"
