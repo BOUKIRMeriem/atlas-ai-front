@@ -11,7 +11,7 @@ import { switchMap } from 'rxjs/operators';
 import { User as FirebaseUser, updatePassword } from 'firebase/auth';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { sendEmailVerification } from 'firebase/auth';
-
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -43,11 +43,20 @@ export class AuthService {
           email: email,
         });
   
-        return userCredential;
+        // 3. Appel de ton backend Flask pour enregistrer dans MySQL
+        const userData = {
+          id: user.uid,
+          nom: nom,
+          nom_utilisateur: nom_utilisateur,
+          email: email,
+        };
+  
+        // On retourne ici la réponse du backend
+        return await lastValueFrom(this.http.post(`${this.baseUrl}/add_user`, userData));
       })
     );
   }
-
+  
   loginWithEmail(email: string, password: string): Observable<any> {
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap((userCredential) => {
