@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
-import { AuthService } from '../../service/auth/auth.service';
-import { SharedService } from '../../service/shared/shared.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { SharedService } from '../../../services/shared/shared.service';
 
 @Component({
   selector: 'app-navbar',

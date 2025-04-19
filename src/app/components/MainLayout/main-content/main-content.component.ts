@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { SharedService } from '../../service/shared/shared.service';
-import { Subscription } from 'rxjs';
+import { SharedService } from '../../../services/shared/shared.service';
+
 
 @Component({
   selector: 'app-main-content',

@@ -1,5 +1,5 @@
 import { Component, HostListener ,Input} from '@angular/core';
-import { SharedService } from '../../service/shared/shared.service'; 
+import { SharedService } from '../../../services/shared/shared.service';
 
 @Component({
   selector: 'app-sidebar',
