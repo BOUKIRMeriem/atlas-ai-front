@@ -8,7 +8,6 @@ import { switchMap, catchError } from 'rxjs/operators';
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private auth: Auth) {}
-  // auth.interceptor.ts
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     const user = this.auth.currentUser;
     if (!user) {

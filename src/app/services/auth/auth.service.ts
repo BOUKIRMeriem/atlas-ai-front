@@ -21,15 +21,21 @@ export class AuthService {
   private firestore: Firestore = inject(Firestore);
 
   constructor(private http: HttpClient, private router: Router, private auth: Auth) {}
-
   register(email: string, password: string, nom: string, nom_utilisateur: string): Observable<any> {
     return from(
       createUserWithEmailAndPassword(this.auth, email, password).then(async (userCredential) => {
         const user = userCredential.user;
+        
+        // Vérification si le nom d'utilisateur existe déjà dans Firestore
+        const usernameRef = doc(this.firestore, `usernames/${nom_utilisateur}`);
+        const usernameDoc = await getDoc(usernameRef);
+        if (usernameDoc.exists()) {
+          throw new Error(' Ce nom d\'utilisateur déjà utilisé');
+        }
   
         // 1. Envoi de l'email de vérification
         await sendEmailVerification(user);
-  
+    
         // 2. Ajout dans Firestore
         const userRef = doc(this.firestore, `users/${user.uid}`);
         await setDoc(userRef, {
@@ -37,12 +43,11 @@ export class AuthService {
           nom_utilisateur: nom_utilisateur,
           email: email,
         });
-  
-        const usernameRef = doc(this.firestore, `usernames/${nom_utilisateur}`);
+    
         await setDoc(usernameRef, {
           email: email,
         });
-  
+    
         // 3. Appel de ton backend Flask pour enregistrer dans MySQL
         const userData = {
           id: user.uid,
@@ -50,9 +55,13 @@ export class AuthService {
           nom_utilisateur: nom_utilisateur,
           email: email,
         };
-  
-        // On retourne ici la réponse du backend
         return await lastValueFrom(this.http.post(`${this.baseUrl}/add_user`, userData));
+      }).catch(error => {
+        // Gestion des erreurs Firebase
+        if (error.code === 'auth/email-already-in-use') {
+          throw new Error('Cet email est déjà utilisé');
+        }
+        throw error;
       })
     );
   }
@@ -78,21 +87,7 @@ export class AuthService {
         if (docSnap.exists()) {
           const email = docSnap.data()['email'];
           console.log('Email trouvé:', email);
-  
-          // Connexion avec l'email et mot de passe
-          return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
-            switchMap((userCredential) => {
-              const user = userCredential.user;
-  
-              // Vérification si l'email de l'utilisateur a été vérifié
-              if (!user.emailVerified) {
-                throw new Error('Veuillez vérifier votre email avant de vous connecter.');
-              }
-  
-              // Si l'email est vérifié, retour de l'utilisateur connecté
-              return of(userCredential);
-            })
-          );
+            return this.loginWithEmail(email, password);
         } else {
           throw new Error('Nom d’utilisateur non trouvé');
         }
@@ -100,7 +95,6 @@ export class AuthService {
     );
   }
   
-
   loginWithGoogle(): Observable<any> {
     return from(signInWithPopup(this.auth, new GoogleAuthProvider()));
   }
@@ -121,9 +115,6 @@ export class AuthService {
     });
   }
 
-  get currentUser() {
-    return this.auth.currentUser;
-  }
   resetPassword(email: string): Observable<void> {
     return from(sendPasswordResetEmail(this.auth, email)).pipe(
       catchError((error: any) => { 
@@ -149,23 +140,9 @@ export class AuthService {
     );
   }
 
-  updatePassword(newPassword: string): Observable<void> {
-    const user = this.auth.currentUser;
-  
-    if (!user) {
-      return of(); // ou throwError(new Error("Aucun utilisateur connecté"))
-    }
-  
-    return from(updatePassword(user, newPassword)).pipe(
-      catchError((error) => {
-        console.error("Erreur lors du changement de mot de passe :", error);
-        return of(); // ou throwError(error) pour remonter l'erreur
-      })
-    );
-  }
   reauthAndUpdatePassword(currentPassword: string, newPassword: string): Observable<void> {
     const user = this.auth.currentUser;
-    if (!user || !user.email) return of(); // ou throwError
+    if (!user || !user.email) return of();
   
     const credential = EmailAuthProvider.credential(user.email, currentPassword);
     return from(

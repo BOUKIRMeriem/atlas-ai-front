@@ -45,11 +45,15 @@ export class RegisterComponent {
         }, 2000);
       },
       error: (err) => {
-        this.registerError = 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.';
+        if (err.message ) {
+          this.registerError = err.message;
+        }
         this.successMessage = null;
         console.error("Erreur d'inscription", err);
       }
     });
   }
+  
+  
   
 }

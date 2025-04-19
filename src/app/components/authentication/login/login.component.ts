@@ -38,20 +38,19 @@ export class LoginComponent {
         this.loginError = "";
         this.successMessage = "Login réussie !";
         setTimeout(() => {
-          this.router.navigate(['/chat']); // Rediriger vers la page de chat
+          this.router.navigate(['/chat']); 
         }, 1000);
       },
       error: (err) => {
         console.error("Erreur de login", err);
         if (err.message === 'Veuillez vérifier votre email avant de vous connecter.') {
-          this.loginError = "Veuillez vérifier votre email avant de vous connecter."; // Message d'erreur spécifique
+          this.loginError = err.message; 
         } else {
-          this.loginError = "Identifiants invalides."; // Message d'erreur générique
+          this.loginError = "Identifiant ou mot de passe incorrect.";
         }
       }
     });
   }
-  
   
   handleGoogleLogin() {
     const provider = new GoogleAuthProvider();
@@ -67,7 +66,7 @@ export class LoginComponent {
         this.successMessage = null;
       });
   }
-
+  
   onForgotPassword() {
     const email = this.loginForm.get('identifiant')?.value;
     console.log("Email saisi :", email);
@@ -75,13 +74,13 @@ export class LoginComponent {
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!email || !isEmail) {
       this.toastr.error("Veuillez entrer une adresse email valide.");
+      this.loginError = "Veuillez entrer une adresse email valide.";
       return;
     }
   
     this.authService.resetPassword(email).subscribe({
       next: () => {
         this.toastr.success("Un email de réinitialisation a été envoyé. Vérifiez votre boîte de réception.");
-        // Optionnel : afficher aussi un message dans une variable Angular (ex: pour affichage dans le HTML)
         this.successMessage = "Le lien de réinitialisation a été envoyé à votre adresse email.";
       },
       error: (err) => {

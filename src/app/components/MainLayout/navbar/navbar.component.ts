@@ -64,12 +64,10 @@ export class NavbarComponent {
       alert("Tous les champs sont obligatoires.");
       return;
     }
-
     if (this.newPassword.length < 6) {
       alert("Le mot de passe doit contenir au moins 6 caractères.");
       return;
     }
-
     if (this.newPassword !== this.confirmPassword) {
       alert("Les mots de passe ne correspondent pas.");
       return;
