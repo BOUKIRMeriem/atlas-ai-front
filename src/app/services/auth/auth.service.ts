@@ -12,6 +12,7 @@ import { User as FirebaseUser, updatePassword } from 'firebase/auth';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { sendEmailVerification } from 'firebase/auth';
 import { lastValueFrom } from 'rxjs';
+import { deleteDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -23,41 +24,66 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router, private auth: Auth) {}
   register(email: string, password: string, nom: string, nom_utilisateur: string): Observable<any> {
     return from(
-      createUserWithEmailAndPassword(this.auth, email, password).then(async (userCredential) => {
-        const user = userCredential.user;
-        
-        // Vérification si le nom d'utilisateur existe déjà dans Firestore
+      (async () => {
+        // Étape 1 : Vérifier si le nom d'utilisateur existe déjà
         const usernameRef = doc(this.firestore, `usernames/${nom_utilisateur}`);
         const usernameDoc = await getDoc(usernameRef);
         if (usernameDoc.exists()) {
-          throw new Error(' Ce nom d\'utilisateur déjà utilisé');
+          throw new Error('Ce nom d\'utilisateur est déjà utilisé');
         }
   
-        // 1. Envoi de l'email de vérification
-        await sendEmailVerification(user);
-    
-        // 2. Ajout dans Firestore
+        // Étape 2 : Créer l'utilisateur Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+        const user = userCredential.user;
+  
         const userRef = doc(this.firestore, `users/${user.uid}`);
-        await setDoc(userRef, {
-          nom: nom,
-          nom_utilisateur: nom_utilisateur,
-          email: email,
-        });
-    
-        await setDoc(usernameRef, {
-          email: email,
-        });
-    
-        // 3. Appel de ton backend Flask pour enregistrer dans MySQL
-        const userData = {
-          id: user.uid,
-          nom: nom,
-          nom_utilisateur: nom_utilisateur,
-          email: email,
-        };
-        return await lastValueFrom(this.http.post(`${this.baseUrl}/add_user`, userData));
-      }).catch(error => {
-        // Gestion des erreurs Firebase
+        let firestoreUserCreated = false;
+        let firestoreUsernameCreated = false;
+  
+        try {
+          // Étape 3 : Envoyer un email de vérification
+          await sendEmailVerification(user);
+  
+          // Étape 4 : Ajouter dans Firestore
+          await setDoc(userRef, {
+            nom: nom,
+            nom_utilisateur: nom_utilisateur,
+            email: email,
+          });
+          firestoreUserCreated = true;
+  
+          await setDoc(usernameRef, {
+            email: email,
+          });
+          firestoreUsernameCreated = true;
+  
+          // Étape 5 : Appel backend
+          const userData = {
+            id: user.uid,
+            nom: nom,
+            nom_utilisateur: nom_utilisateur,
+            email: email,
+          };
+  
+          await lastValueFrom(this.http.post(`${this.baseUrl}/add_user`, userData));
+          
+          return { message: 'Inscription réussie' };
+  
+        } catch (error) {
+          // ⚠️ Nettoyage : suppression des données Firestore si elles existent
+          if (firestoreUserCreated) {
+            await deleteDoc(userRef);
+          }
+          if (firestoreUsernameCreated) {
+            await deleteDoc(usernameRef);
+          }
+  
+          // ⚠️ Suppression de l'utilisateur Firebase
+          await user.delete();
+  
+          throw error;
+        }
+      })().catch(error => {
         if (error.code === 'auth/email-already-in-use') {
           throw new Error('Cet email est déjà utilisé');
         }
@@ -65,6 +91,7 @@ export class AuthService {
       })
     );
   }
+  
   
   loginWithEmail(email: string, password: string): Observable<any> {
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(

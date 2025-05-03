@@ -7,11 +7,33 @@ import { Observable } from 'rxjs';
 })
 export class ChatService {
 
-  private apiUrl = 'http://localhost:5000/chat'; 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  sendMessage(message: string, userId: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { message, userId });
+  createNewChat(firstMessage: string): Observable<any> {
+    return this.http.post('http://localhost:5000/chat/new_chat', { first_message: firstMessage });
   }
+
+  sendMessage(message: string, chatId: number): Observable<any> {
+    return this.http.post<any>('http://localhost:5000/chat/', { message, chat_id: chatId });
+  }
+
+  getChatSessions() {
+    return this.http.get<any[]>('http://localhost:5000/history/');
+  }
+
+  getMessages(chatId: number): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:5000/chat/${chatId}`);
+  }
+
+  deleteSession(sessionId: number) {
+    console.log('Suppression de la session avec ID:', sessionId);  // Vérifie l'ID
+    return this.http.delete<any>(`http://localhost:5000/history/delete/${sessionId}`);
+  }
+  updateTitleSession(sessionId: number , newTitle: string) {
+    return this.http.put<any>(`http://localhost:5000/history/update/${sessionId}`, { title: newTitle });
+  }
+  
+  
+
 }

@@ -19,7 +19,7 @@
             30 jours précédents
         </div>
         <ul class="search-results">
-            <li *ngFor="let chat of filteredHistory()" >
+            <li *ngFor="let chat of filteredHistory()" (click)="afficheChat(chat.chatId)">
                 <i class="fas fa-comment"></i> {{ chat.title }}
             </li>
         </ul>
@@ -28,16 +28,23 @@
 
     <p class="section-title">Historique <span class="view-all">All ></span></p>
     <ul class="history-list">
-        <li *ngFor="let item of historyItems" class="history-item" [class.active]="item.isActive">
-            <span class="history-title">{{ item.title }}</span>
+        <li *ngFor="let item of historyItems" class="history-item" [class.active]="item.isActive"
+            (click)="afficheChat(item.chatId)">
+            <!-- Affiche un input si en mode édition, sinon le texte du titre -->
+            <input *ngIf="item.isEditing" [(ngModel)]="item.newTitle" (blur)="updateTitle(item)"
+                (keyup.enter)="updateTitle(item)" type="text" class="history-title-input" />
+            <span *ngIf="!item.isEditing" (click)="enableEdit(item)">{{ item.title }}</span>
+
             <div class="options-menu">
-                <span class="options" (click)="toggleDropdown(item, $event)" [class.active]="item.isActive">...</span>
-                <div class="dropdown" *ngIf="item.showDropdown">
+                <span class="options" (click)="toggleDropdown(item)" [class.active]="item.isActive">...</span>
+                <div class="dropdown" *ngIf="item.showDropdown"
+                    [ngStyle]="{'top': item.dropdownTop, 'left': item.dropdownLeft}">
                     <ul>
-                        <li style="display: flex; align-items: center;">
+                        <li style="display: flex; align-items: center;" (click)="enableEdit(item)">
                             <i class="fas fa-edit" style="margin-right: 8px;"></i> Renommer
                         </li>
-                        <li style="color: red; display: flex; align-items: center;">
+                        <li style="color: red; display: flex; align-items: center;"
+                            (click)="confirmDelete(item, $event)">
                             <i class="fas fa-trash-alt" style="margin-right: 8px;"></i> Supprimer
                         </li>
                     </ul>

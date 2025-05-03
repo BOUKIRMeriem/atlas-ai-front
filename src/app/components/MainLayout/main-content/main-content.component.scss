@@ -4,8 +4,9 @@
   display: flex;
   height: 100vh;
   transition: margin-left 0.3s ease;
-  margin-left: 250px
+  margin-left: 250px;
 }
+
 .chat-container {
   flex: 1;
   display: flex;
@@ -24,7 +25,6 @@
   flex-direction: column;
   width: 100%;
   overflow-y: auto;
-  
 }
 
 .user-msg {
@@ -55,6 +55,7 @@
   align-items: flex-start;
   width: 85%;
   padding: 10px;
+
 }
 
 .chat-title {
@@ -65,7 +66,7 @@
   -webkit-text-fill-color: transparent;
   text-align: center;
   font-family: 'Poppins', sans-serif;
-  margin-top: 150px;
+  margin-top: 140px;
 }
 
 .input-area {
@@ -81,6 +82,7 @@
   position: absolute;
   margin-top: 10%;
 
+
   &.fixed-bottom {
     position: fixed;
     align-items: flex-end;
@@ -89,6 +91,7 @@
     transform: none;
     margin-bottom: 20px;
     transform: translateX(24%);
+    z-index: 1;
   }
 }
 
@@ -147,3 +150,40 @@
   scrollbar-width: thin;
   scrollbar-color: #ecf0f1 #F8F8FF;
 }
+
+
+
+
+
+
+
+
+
+.file-preview {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: auto;
+  display: flex;
+  margin-bottom: 5px;
+
+}
+
+.file-info {
+  display: flex;
+  gap: 10px;
+  width: auto;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: red;
+  cursor: pointer;
+}
+
+
+
+
+

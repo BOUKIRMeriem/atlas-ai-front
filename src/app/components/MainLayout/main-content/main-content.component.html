@@ -1,23 +1,32 @@
-
 <div class="main-container">
-<div class="chat-container">
-  <p class="chat-title" *ngIf="messages.length === 0">Comment puis-je vous aider ?</p>
-  <div class="messages-container" #messagesContainer>
-    <div class="messages">
-      <div *ngFor="let msg of messages" [ngClass]="{'user-msg': msg.isUser, 'bot-msg': !msg.isUser}">
-        {{ msg.text }}
+  <div class="chat-container">
+    <p class="chat-title" *ngIf="messages.length === 0">Comment puis-je vous aider ?</p>
+    <div class="messages-container" #messagesContainer>
+      <div class="messages">
+        <div *ngFor="let msg of messages" [ngClass]="{'user-msg': msg.isUser, 'bot-msg': !msg.isUser}">
+          <ng-container *ngIf="!msg.isUser; else userText">
+            <div class="message-text" [innerHTML]="msg.text"></div>
+          </ng-container>
+          <ng-template #userText>
+            <div class="message-text">
+              {{ msg.text }}
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <!-- Zone de saisie -->
+    <div class="input-area" [ngClass]="{'fixed-bottom': isFirstMessageSent}">
+
+      <textarea placeholder="Poser une question" appAutoResize [(ngModel)]="message" (input)="toggleIcons($event)"
+        (keydown.enter)="sendMessage($event)">
+      </textarea>
+      <!-- ✅ Zone des icônes -->
+      <div class="icons">
+        <img src="assets/images/icon_fichier.png" class="icon-file">
+        <img *ngIf="!isTextNotEmpty" src="assets/images/icon_voice.png" class="icon-voice">
+        <img *ngIf="isTextNotEmpty" src="assets/images/icon_send.png" class="icon-send" (click)="sendMessage($event)">
       </div>
     </div>
   </div>
-  <!-- Zone de saisie -->
-  <div class="input-area" [ngClass]="{'fixed-bottom': isFirstMessageSent}">
-    <textarea placeholder="Poser une question" appAutoResize [(ngModel)]="message" (input)="toggleIcons($event)"
-      (keydown.enter)="sendMessage($event)"></textarea>
-    <div class="icons">
-      <img src="assets/images/icon_fichier.png" class="icon-file">
-      <img *ngIf="!isTextNotEmpty" src="assets/images/icon_voice.png" class="icon-voice">
-      <img *ngIf="isTextNotEmpty" src="assets/images/icon_send.png" class="icon-send" (click)="sendMessage($event)">
-    </div>
-  </div>
-</div>
 </div>

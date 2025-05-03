@@ -7,3 +7,23 @@ body {
 
 
 
+table.styled-table {
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+  font-family: sans-serif;
+  width: 100%;
+  border: 1px solid #ccc; 
+}
+
+.styled-table thead {
+  background-color: #ddd;
+}
+.styled-table th,
+.styled-table td {
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  text-align: left;
+}
+
+

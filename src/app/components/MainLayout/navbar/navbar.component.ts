@@ -40,8 +40,18 @@ export class NavbarComponent {
     this.menuOpen = !this.menuOpen;
   }
   logout() {
+    this.sharedService.setMessages([]);
+    this.sharedService.setFirstMessageSent(false);
+    this.sharedService.setIsTextNotEmpty(false);
+    localStorage.removeItem('chatId');
+    localStorage.setItem('isLoggedOut', 'true');
+    this.sharedService.setHasScroll(false);
     this.authService.logoutAndRedirect();
+      setTimeout(() => {
+      window.location.reload(); // recharge complètement l'application après déconnexion
+    }, 100); 
   }
+  
   @HostListener('document:click', ['$event'])
   closeMenusOnClickOutside(event: Event) {
     const targetElement = event.target as HTMLElement;
