@@ -1,14 +1,15 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy  , Input} from '@angular/core';
 import { SharedService } from '../../../services/shared/shared.service';
 import { ChatService } from 'src/app/services/chat/chat.service';
 import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-main-content',
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.scss']
 })
-export class MainContentComponent {
+export class MainContentComponent implements OnInit{
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
   message: string = "";
   chatId: number | undefined;
@@ -16,11 +17,12 @@ export class MainContentComponent {
   selectedFiles: File[] = [];
   isFirstMessageSent: boolean = false;
   isTextNotEmpty: boolean = false;
-
+  @Input() collapsed: boolean = false;
 
   constructor(private sharedService: SharedService, private chatService: ChatService, private http: HttpClient) { }
 
   ngOnInit() {
+   
     this.sharedService.loggedOut$.subscribe((isLoggedOut) => {
       if (isLoggedOut) {
         this.resetChat();
@@ -60,6 +62,7 @@ export class MainContentComponent {
       this.resetChat();
     });
   }
+
 
   ngAfterViewInit() {
     this.checkScroll();
@@ -178,19 +181,6 @@ export class MainContentComponent {
   }
 
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.sharedService.setIsTextNotEmpty(true);
-      for (let i = 0; i < input.files.length; i++) {
-        this.selectedFiles.push(input.files.item(i)!);
-      }
-    }
-  }
-
-  removeFile(index: number): void {
-    this.selectedFiles.splice(index, 1); // Supprimer un fichier par son index
-  }
 
 
   

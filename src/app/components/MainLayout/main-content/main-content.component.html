@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" [ngClass]="{ 'sidebar-collapsed': collapsed }">
   <div class="chat-container">
     <p class="chat-title" *ngIf="messages.length === 0">Comment puis-je vous aider ?</p>
     <div class="messages-container" #messagesContainer>
@@ -16,8 +16,7 @@
       </div>
     </div>
     <!-- Zone de saisie -->
-    <div class="input-area" [ngClass]="{'fixed-bottom': isFirstMessageSent}">
-
+    <div class="input-area"[ngClass]="{ 'fixed-bottom': isFirstMessageSent,'sidebar-collapsed': collapsed && isFirstMessageSent }">
       <textarea placeholder="Poser une question" appAutoResize [(ngModel)]="message" (input)="toggleIcons($event)"
         (keydown.enter)="sendMessage($event)">
       </textarea>

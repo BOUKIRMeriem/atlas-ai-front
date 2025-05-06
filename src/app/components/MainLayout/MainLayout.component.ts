@@ -6,7 +6,10 @@ import { Component } from '@angular/core';
 })
 export class MainLayoutComponent  {
 
-
+  isSidebarCollapsed = false;
+  toggleSidebarState(collapsed: boolean) {
+    this.isSidebarCollapsed = collapsed;
+  }
 
 
   

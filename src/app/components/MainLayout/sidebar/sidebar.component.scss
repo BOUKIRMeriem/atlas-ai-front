@@ -2,29 +2,55 @@
 .sidebar {
   width: 250px;
   background: #F8F8FF;
-  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.05);
   transition: width 0.3s ease;
   left: 0;
   top: 0;
   position: fixed;
   height: 100%;
   z-index: 2;
-  overflow-y: auto;
-
+  overflow: hidden;
 }
 
-.sidebar.hidden {
-  transform: translateX(-100%);
+.sidebar.collapsed {
+  width: 58px;
+}
+
+.sidebar.collapsed .sidebar-header {
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar.collapsed .new-chat {
+  margin: 0;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  margin-top: 70px;
+}
+
+.sidebar.collapsed .search {
+  margin: 0;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.toggle-sidebar img {
+  transition: transform 0.3s ease;
+}
+
+.toggle-sidebar img.rotated {
+  transform: rotate(180deg);
 }
 
 .toggle-sidebar {
   position: absolute;
   top: 8px;
-  left: 15px;
+  left: 5px;
   background: none;
   color: white;
   border: none;
@@ -43,7 +69,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 20px;
   width: 100%;
 }
 
@@ -55,7 +81,7 @@
   border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
@@ -199,18 +225,7 @@
   align-items: center;
   opacity: 60%;
   font-family: 'Poppins', sans-serif;
-}
 
-.view-all {
-  font-size: 12px;
-  opacity: 60%;
-  text-decoration: none;
-}
-
-.view-all:hover {
-  font-weight: bold;
-  text-decoration: underline;
-  opacity: 100%;
 }
 
 .history-list {
@@ -222,6 +237,26 @@
   overflow-y: auto;
   z-index: 2;
   overflow-x: hidden;
+}
+
+.assistants-list {
+  list-style-type: none;
+  padding-left: 10px;
+  padding-right: 15px;
+  margin-right: -15px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar-content {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
 }
 
 .history-item {
@@ -292,10 +327,7 @@
   height: 50px;
 }
 
-.assistants-list {
-  list-style-type: none;
-  padding-left: 10px;
-}
+
 
 .assistants-list li {
   display: flex;
@@ -328,4 +360,20 @@
   background: transparent;
   outline: none;
   width: 100%;
+}
+
+.empty-message {
+  text-align: center;
+  color: #aaa;
+  font-size: 14px;
+  padding: 20px 10px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.empty-message i {
+  font-size: 16px;
 }

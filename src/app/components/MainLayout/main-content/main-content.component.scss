@@ -3,9 +3,42 @@
 .main-container {
   display: flex;
   height: 100vh;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s ease, width 0.3s ease;
   margin-left: 250px;
 }
+.main-container.sidebar-collapsed {
+  margin-left: 58px;
+  width: calc(100% - 58px);
+}
+
+.input-area.fixed-bottom {
+  position: fixed;
+  left: 32%;
+  width: 55%;
+  bottom: 20px;
+  z-index: 1;
+}
+
+.main-container.sidebar-collapsed .input-area.fixed-bottom {
+  width: 70%; /* ou 80% si tu veux qu'elle s'adapte mieux */
+  transform: translateX(-20%);
+
+}
+
+.input-area {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  background: #F8F8FF;
+  border-radius: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 67%;
+  border: 1px solid #D0D3D4;
+  padding: 10px;
+  position: absolute;
+  margin-top: 10%;
+}
+
 
 .chat-container {
   flex: 1;
@@ -17,6 +50,10 @@
   margin-bottom: 24vh;
   align-items: center;
   justify-content: center;
+  transition: width 0.3s ease;
+}
+.sidebar.collapsed ~ .main-container .chat-container {
+  width: 100%;  /* Lorsque la sidebar est fermée, le contenu occupe toute la largeur */
 }
 
 .messages-container {
@@ -69,31 +106,7 @@
   margin-top: 140px;
 }
 
-.input-area {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  background: #F8F8FF;
-  border-radius: 20px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  width: 67%;
-  border: 1px solid #D0D3D4;
-  padding: 10px;
-  position: absolute;
-  margin-top: 10%;
 
-
-  &.fixed-bottom {
-    position: fixed;
-    align-items: flex-end;
-    left: 250px;
-    width: 55%;
-    transform: none;
-    margin-bottom: 20px;
-    transform: translateX(24%);
-    z-index: 1;
-  }
-}
 
 .input-area textarea {
   flex: 1;
@@ -151,14 +164,6 @@
   scrollbar-color: #ecf0f1 #F8F8FF;
 }
 
-
-
-
-
-
-
-
-
 .file-preview {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -186,4 +191,27 @@
 
 
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  color: #333;
+}
+
+.pagination-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+span {
+  margin: 0 10px;
+}
 

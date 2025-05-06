@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, Output, EventEmitter } from '@angular/core';
 import { SharedService } from '../../../services/shared/shared.service';
 import { ChatService } from 'src/app/services/chat/chat.service';
 
@@ -7,19 +7,25 @@ import { ChatService } from 'src/app/services/chat/chat.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   isSearchOpen = false;
   searchQuery: string = "";
   historyItems: any[] = [];
+  sidebarState: boolean = true;
+  isCollapsed = false;
+  @Output() sidebarToggled = new EventEmitter<boolean>();
 
 
   constructor(private sharedService: SharedService, private chatService: ChatService) { }
-
-
   ngOnInit() {
     this.loadChatSessions();
-
   }
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+    this.sidebarToggled.emit(this.isCollapsed);
+    this.sidebarState = !this.sidebarState;
+  }
+
   loadChatSessions() {
     this.chatService.getChatSessions().subscribe({
       next: (sessions) => {
@@ -58,9 +64,12 @@ export class SidebarComponent {
     selectedItem.isActive = true;
   }
   toggleSearch() {
-    this.isSearchOpen = !this.isSearchOpen;
-    this.searchQuery = "";
+    this.isSearchOpen = !this.isSearchOpen;  // Inverse l'état de la recherche
+    if (this.isSearchOpen) {
+      this.searchQuery = '';  // Réinitialise la requête de recherche quand le modal est ouvert
+    }
   }
+
   filteredHistory() {
     return this.historyItems.filter(chat =>
       chat.title.toLowerCase().includes(this.searchQuery.toLowerCase())
@@ -135,5 +144,10 @@ export class SidebarComponent {
   }
 
 
-
+  assistants: { image: string; nom: string }[] = [
+    { image: 'assets/images/img1.png', nom: 'VisioData' },
+    { image: 'assets/images/img2.png', nom: 'TourBot' },
+  ];
+  
+  
 }

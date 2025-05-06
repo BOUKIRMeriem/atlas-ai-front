@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit,Input } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { SharedService } from '../../../services/shared/shared.service';
 
@@ -7,7 +7,7 @@ import { SharedService } from '../../../services/shared/shared.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent  implements OnInit{
   menuOpen = false;
   hasScroll = false;
   userName: string | null = null;
@@ -23,6 +23,7 @@ export class NavbarComponent {
   showConfirmPassword: boolean = false;
 
   constructor(private authService: AuthService, private sharedService: SharedService) { }
+  @Input() sidebarReduced = false
   ngOnInit() {
     this.sharedService.hasScroll$.subscribe(value => {
       this.hasScroll = value;

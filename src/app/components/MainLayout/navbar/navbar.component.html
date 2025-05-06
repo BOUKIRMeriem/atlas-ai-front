@@ -1,4 +1,6 @@
-<div class="avatar-container" [class.has-scroll]="hasScroll">
+<div class="avatar-container"
+     [class.has-scroll]="hasScroll"
+     [class.sidebar-reduced]="sidebarReduced">
   <div class="avatar" (click)="toggleMenu()">M</div>
   <div class="menu" *ngIf="menuOpen">
     <p style="font-weight: bold;">{{ name }}</p>

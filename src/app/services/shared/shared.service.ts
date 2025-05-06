@@ -63,4 +63,8 @@ export class SharedService {
   getChatId() {
     return this.chatIdSubject.asObservable();
   }
+
+
+
+
 }
